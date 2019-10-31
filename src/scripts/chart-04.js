@@ -174,7 +174,7 @@ function ready(datapoints) {
       d3.select(this).style('font-weight', 700)
     })
     .on('mouseout', function(d) {
-      d3.selectAll('.areas  4').style('opacity', 1)
+      d3.selectAll('.areas4').style('opacity', 1)
       d3.select(this).style('font-weight', 400)
     })
 
