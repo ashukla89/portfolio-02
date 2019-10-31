@@ -5,7 +5,7 @@ const height = 400 - margin.top - margin.bottom
 const width = 700 - margin.left - margin.right
 
 const svg = d3
-  .select('#chart-1')
+  .select('#chart-3')
   .append('svg')
   .attr('height', height + margin.top + margin.bottom)
   .attr('width', width + margin.left + margin.right)
@@ -19,24 +19,23 @@ const xPositionScale = d3
 
 const yPositionScale = d3
   .scaleLinear()
-  .domain([0, 1600000])
+  .domain([0, 350000])
   .range([height, 0])
 
 const colorScale = d3
   .scaleOrdinal()
   .range([
-    '#8dd3c7',
-    '#ffffb3',
-    '#bebada',
-    '#fb8072',
-    '#80b1d3',
-    '#fdb462',
-    '#b3de69',
-    '#fccde5',
-    '#d9d9d9',
-    '#bc80bd',
-    '#ccebc5',
-    '#ffed6f'
+    '#a6cee3',
+    '#1f78b4',
+    '#b2df8a',
+    '#33a02c',
+    '#fb9a99',
+    '#e31a1c',
+    '#fdbf6f',
+    '#ff7f00',
+    '#cab2d6',
+    '#6a3d9a',
+    '#ffff99'
   ])
 
 const area = d3
@@ -50,7 +49,7 @@ const area = d3
 // but ran out of time to put in corresponding circles
 // since this doesn't work well with paths
 
-d3.csv(require('../data/world.csv')).then(ready)
+d3.csv(require('../data/us.csv')).then(ready)
 
 function ready(datapoints) {
   console.log('Data read in:', datapoints)
@@ -85,16 +84,16 @@ function ready(datapoints) {
   // console.log('second stacked data', newStackedData)
 
   const layer = svg
-    .selectAll('.layer')
+    .selectAll('.layer3')
     .data(newStackedData)
     .enter()
     .append('g')
-    .attr('class', 'layer')
+    .attr('class', 'layer3')
 
   layer
     .append('path')
     .attr('class', function(d) {
-      return 'areas area' + d.key
+      return 'areas3 area3' + d.key
     })
     .style('fill', function(d, i) {
       // console.log(i, d)
@@ -105,15 +104,15 @@ function ready(datapoints) {
     .on('mouseover', function(d) {
       console.log(d)
       // reduce opacity of all groups
-      d3.selectAll('.areas').style('opacity', 0.1)
+      d3.selectAll('.areas3').style('opacity', 0.1)
       // except the one that is hovered over
-      d3.select('.area' + d.key).style('opacity', 1)
+      d3.select('.area3' + d.key).style('opacity', 1)
       // bold the relevant text
-      d3.select('.label' + d.key).style('font-weight', 700)
+      d3.select('.label3' + d.key).style('font-weight', 700)
     })
     .on('mouseout', function(d) {
-      d3.selectAll('.areas').style('opacity', 1)
-      d3.selectAll('.mylabels').style('font-weight', 400)
+      d3.selectAll('.areas3').style('opacity', 1)
+      d3.selectAll('.mylabels3').style('font-weight', 400)
     })
 
   // Add one dot in the legend for each name
@@ -135,25 +134,25 @@ function ready(datapoints) {
     .on('mouseover', function(d) {
       console.log(d)
       // reduce opacity of all groups
-      d3.selectAll('.areas').style('opacity', 0.1)
+      d3.selectAll('.areas3').style('opacity', 0.1)
       // except the one that is hovered over
-      d3.select('.area' + d).style('opacity', 1)
+      d3.select('.area3' + d).style('opacity', 1)
       // bold the relevant text
-      d3.select('.label' + d).style('font-weight', 700)
+      d3.select('.label3' + d).style('font-weight', 700)
     })
     .on('mouseout', function(d) {
-      d3.selectAll('.areas').style('opacity', 1)
-      d3.selectAll('.mylabels').style('font-weight', 400)
+      d3.selectAll('.areas3').style('opacity', 1)
+      d3.selectAll('.mylabels3').style('font-weight', 400)
     })
 
   // Add one dot in the legend for each name.
   svg
-    .selectAll('mylabels')
+    .selectAll('mylabels3')
     .data(countryGroups)
     .enter()
     .append('text')
     .attr('class', function(d) {
-      return 'mylabels label' + d
+      return 'mylabels3 label3' + d
     })
     .attr('x', width + size + 15)
     .attr('y', function(d, i) {
@@ -169,19 +168,19 @@ function ready(datapoints) {
     .on('mouseover', function(d) {
       console.log(d)
       // reduce opacity of all groups
-      d3.selectAll('.areas').style('opacity', 0.1)
+      d3.selectAll('.areas3').style('opacity', 0.1)
       // except the one that is hovered over
-      d3.select('.area' + d).style('opacity', 1)
+      d3.select('.area3' + d).style('opacity', 1)
       d3.select(this).style('font-weight', 700)
     })
     .on('mouseout', function(d) {
-      d3.selectAll('.areas').style('opacity', 1)
+      d3.selectAll('.areas3').style('opacity', 1)
       d3.select(this).style('font-weight', 400)
     })
 
   svg
     .append('text')
-    .text('Patents Filed Worldwide by Region, 1980 - 2012')
+    .text('Patents Filed in the US by Region, 1980 - 2012')
     .attr('x', width / 2) // in the center
     .attr('text-anchor', 'middle') // center aligned
     .attr('dy', -15)
